@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class boj11401 {
-	static long mod = 1000000007;
+	static long mod ;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -11,6 +11,7 @@ public class boj11401 {
 		StringTokenizer stz = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(stz.nextToken());
 		int r = Integer.parseInt(stz.nextToken());
+		mod = Long.parseLong(stz.nextToken());
 		sb.append(nCr(n,r));
 		bw.write(sb.toString());
 		bw.flush();
