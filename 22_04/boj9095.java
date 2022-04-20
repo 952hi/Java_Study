@@ -1,5 +1,5 @@
 import java.io.*;
-public class boj1991 {
+public class boj9095 {
 	static class Reader {
 		int bfs = 1 << 16;
 		byte[] buffer = new byte[bfs];
@@ -33,12 +33,12 @@ public class boj1991 {
 			return rtn;
 		}
 	}
-	static int n,alpha[];
 	public static void main(String[] args) {
 		Reader in = new Reader();
-		n = in.nextInt();
-		alpha = new int[26];
-		System.out.println('A'-65);
+		int n = in.nextInt();
+		int[] dp = new int[11];
+		dp[0]=1;dp[1]=1;dp[2]=2;
+		for(int i=3;i<11;i++) dp[i] = dp[i-1]+dp[i-2]+dp[i-3];
+		for(int i=0;i<n;i++) System.out.println(dp[in.nextInt()]);
 	}
-
 }

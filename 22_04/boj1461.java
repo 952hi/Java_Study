@@ -39,60 +39,58 @@ public class boj1461 {
 		}
 	}
 	static PriorityQueue<Integer> plus = new PriorityQueue<>(Collections.reverseOrder()), minus = new PriorityQueue<>(Collections.reverseOrder());
-	static int n,m,res,pluscnt,minuscnt;
+	static int n,m,res,pluscnt,minuscnt,plussum,minussum;
 	public static void main(String[] args) {
 		Reader in = new Reader();
-		
 		n = in.nextInt();
 		m = in.nextInt();
 		res =0;
 		pluscnt = 0;
 		minuscnt = 0;
+		plussum = 0;
+		minussum = 0;
 		int temp;
-		int max = 0;
-		int dir = 0;
 		for(int i=0;i<n;i++) {
 			temp = in.nextInt();
-			if(Math.abs(temp)>max) {
-				max = temp;
-				if(temp >0) dir = 1;
-				else dir = -1;
-			}
 			if(temp>0) {
 				plus.offer(temp);
 				pluscnt++;
+				
 			}
 			else {
-				minus.offer(temp);
+				minus.offer(-temp);
 				minuscnt++;
 			}
 		}
-		int book = 0;
-		if(dir<0) {
-			plus(dir);
-			minus(dir);
-		}else {
-			minus(dir);
-			plus(dir);
+		int a=0,b=0,max=0;
+		if(!plus.isEmpty()) {
+			a= plus.peek();
+			plus();
 		}
-		System.out.println(res);
+		if(!minus.isEmpty()) {
+			b= minus.peek();
+			minus();
+		}
+		max = Math.max(a, b);
+			
+		System.out.println(res-max);
 	}
-	private static void minus(int dir) {
+	private static void minus() {
 		int book=0;
 		while(minuscnt>0) {
-			for(int i=0;i<m;i++) {
-				book = minus.poll();
-				minuscnt--;
-				if(minuscnt==0) break;
+			book = minus.poll();
+			minuscnt--;
+			if(minuscnt>=1) {
+				for(int i=0;i<m-1;i++) {
+					minus.poll();
+					minuscnt--;
+					if(minuscnt==0) break;
+				}
 			}
-			if(dir == -1 && minuscnt==0) {
-				res += -(book);
-			}else {
-			res += -(book*2);
-			}
+			res += book*2;
 		}
 	}
-	private static void plus(int dir) {
+	private static void plus() {
 		int book=0;
 		while(pluscnt>0) {
 			book = plus.poll();

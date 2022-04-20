@@ -1,10 +1,11 @@
 import java.io.*;
-public class boj1991 {
+public class boj1629 {
 	static class Reader {
 		int bfs = 1 << 16;
 		byte[] buffer = new byte[bfs];
 		int bufferPos = 0, bufferState = 0;
 		DataInputStream dis = new DataInputStream(System.in);
+
 		byte read() {
 			if (bufferPos == bufferState) {
 				try {
@@ -17,6 +18,7 @@ public class boj1991 {
 			}
 			return buffer[bufferPos++];
 		}
+
 		int nextInt() {
 			int rtn = 0;
 			byte c = read();
@@ -33,12 +35,23 @@ public class boj1991 {
 			return rtn;
 		}
 	}
-	static int n,alpha[];
+	static long mod;
 	public static void main(String[] args) {
 		Reader in = new Reader();
-		n = in.nextInt();
-		alpha = new int[26];
-		System.out.println('A'-65);
+		long a=in.nextInt(),b=in.nextInt();
+		mod=in.nextInt();
+		System.out.println(power(a,b));
 	}
-
+	private static long power(long x,long y) {
+        long res = 1L;
+        x = x%mod;
+        while(y> 0) {
+            if(y%2==1) {
+                res = (res*x) % mod;
+            }
+            y = y>>1;
+            x = (x*x) % mod;
+        }
+        return res;
+    }
 }

@@ -1,5 +1,5 @@
 import java.io.*;
-public class boj1991 {
+public class boj1978 {
 	static class Reader {
 		int bfs = 1 << 16;
 		byte[] buffer = new byte[bfs];
@@ -33,12 +33,26 @@ public class boj1991 {
 			return rtn;
 		}
 	}
-	static int n,alpha[];
 	public static void main(String[] args) {
 		Reader in = new Reader();
-		n = in.nextInt();
-		alpha = new int[26];
-		System.out.println('A'-65);
+		int n = in.nextInt();
+		int comp = 0;
+		int cnt = 0;
+		for(int i=0;i<n;i++) {
+			comp= in.nextInt();
+			if(checkprime(comp)) cnt++;
+		}
+		System.out.println(cnt);
 	}
-
+	private static boolean checkprime(int comp) {
+		if(comp==1) return false;
+		boolean check = true;
+		for(int i=2;i<=(int)Math.sqrt(comp);i++) {
+			if(comp%i==0) {
+				check = false;
+				break;
+			}
+		}
+		return check;
+	}
 }

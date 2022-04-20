@@ -1,10 +1,11 @@
 import java.io.*;
-public class boj1991 {
+public class boj3003 {
 	static class Reader {
 		int bfs = 1 << 16;
 		byte[] buffer = new byte[bfs];
 		int bufferPos = 0, bufferState = 0;
 		DataInputStream dis = new DataInputStream(System.in);
+
 		byte read() {
 			if (bufferPos == bufferState) {
 				try {
@@ -17,6 +18,7 @@ public class boj1991 {
 			}
 			return buffer[bufferPos++];
 		}
+
 		int nextInt() {
 			int rtn = 0;
 			byte c = read();
@@ -33,12 +35,13 @@ public class boj1991 {
 			return rtn;
 		}
 	}
-	static int n,alpha[];
 	public static void main(String[] args) {
 		Reader in = new Reader();
-		n = in.nextInt();
-		alpha = new int[26];
-		System.out.println('A'-65);
+		int chess[] = {1,1,2,2,2,8};
+		for(int i=0;i<6;i++) {
+			int temp = in.nextInt();
+			if(chess[i]==temp) System.out.print(0+" ");
+			else System.out.print(chess[i]-temp+" ");
+		}
 	}
-
 }

@@ -1,5 +1,5 @@
 import java.io.*;
-public class boj1991 {
+public class boj15965 {
 	static class Reader {
 		int bfs = 1 << 16;
 		byte[] buffer = new byte[bfs];
@@ -33,12 +33,31 @@ public class boj1991 {
 			return rtn;
 		}
 	}
-	static int n,alpha[];
+	static boolean prime[]=new boolean[8000001];
 	public static void main(String[] args) {
 		Reader in = new Reader();
-		n = in.nextInt();
-		alpha = new int[26];
-		System.out.println('A'-65);
+		int n = in.nextInt();
+		checkprime();
+		int idx = 2;
+		int cnt = 0;
+		while(true) {
+			if(!prime[idx]) {
+				if(++cnt==n) {
+					System.out.println(idx);
+					break;
+				}
+			}
+			idx++;
+		}
 	}
-
+	private static void checkprime() {
+		int leng = prime.length;
+		int sqrt = (int)Math.sqrt(leng);
+		for(int i=2;i<=sqrt;i++) {
+			if(prime[i]) continue;// 소수가아니면패스
+			for(int j=i*i;j<leng;j=j+i) {
+				prime[j] = true; // 소수면 소수의 배수는 소수가아니기에 트루로 변경
+			}
+		}
+	}
 }
