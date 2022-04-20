@@ -36,35 +36,41 @@ public class boj1520 {
 		}
 	}
 	static int row,col,map[][][];
-	static int[][] dxdy = { { 0, 0, 1, -1 }, { 1, -1, 0, 0 } };
+	static boolean visited[][];
 	public static void main(String[] args) {
 		Reader in = new Reader();
 		row = in.nextInt();
 		col = in.nextInt();
+		// 0 -> 오르내리막 정보
+		// 1 -> 메모이제이션 길 왕복횟수
 		map = new int[row][col][2];
-		
+		visited = new boolean[row][col];
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				map[i][j][0] = in.nextInt();
 			}
 		}
 		dfs(0,0);
-		
+		System.out.println(map[0][0][1]);
 	}
-	
-	private static int dfs(int x, int y) {
-		if(map[x][y][1]!=0) {
-			return map[x][y][1];
+	static int[][] dxdy = { { 0, 0, 1, -1 }, { 1, -1, 0, 0 } };
+	private static int dfs(int i, int j) {
+		if(i==row-1 && j==col-1) {
+			return 1;
 		}
-		int nx,ny;
-		for(int i=0;i<4;i++) {
-			nx = dxdy[0][i] + x;
-			ny = dxdy[1][i] + y;
-			if(0<= nx && nx<row && 0<= ny && ny<col && map[x][y][0]>map[nx][ny][0]) {
-				map[nx][ny][1] += 1;
-				map[x][y][1] = dfs(nx,ny);
+		if(map[i][j][1]!=0) return map[i][j][1];
+		
+		if(!visited[i][j]) {
+			visited[i][j] = true;
+			int nx,ny;
+			for(int k=0;k<4;k++) {
+				nx = i + dxdy[0][k];
+				ny = j + dxdy[1][k];
+				if(0<=nx && 0<=ny && nx<row && ny<col && map[nx][ny][0] < map[i][j][0]) {
+					map[i][j][1] += dfs(nx,ny);
+				}
 			}
 		}
-		return 0;
+		return map[i][j][1];
 	}
 }
