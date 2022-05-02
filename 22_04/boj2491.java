@@ -1,32 +1,33 @@
 import java.io.*;
-public class boj15652 {
-	static int n,m,res[];
-	static StringBuilder sb = new StringBuilder();
-	public static void main(String[] args) throws IOException {
+import java.util.*;
+public class boj2491 {
+	public static void main(String[] args) {
 		Reader in = new Reader();
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		n = in.nextInt();
-		m = in.nextInt();
-		
-		res = new int[m];
-		perm(1,0);
-		sb.setLength(sb.length()-1);
-		bw.write(sb.toString());
-		bw.flush();
-	}
-	private static void perm(int val, int chk) {
-		if(chk == m) {
-			for(int i=0;i<m;i++) {
-				sb.append(res[i]).append(" ");
+		int N = in.nextInt();
+		int comp[] = new int[N];
+		for(int i=0;i<N;i++) comp[i]=in.nextInt();
+		int max = 1;
+		int res[] = new int[N];
+		int minus[] = new int[N];
+		res[0]=1;
+		minus[0]=1;
+		for(int i=1;i<N;i++) {
+			res[i]=1;
+			minus[i]=1;
+			if(comp[i]>comp[i-1]) {
+				res[i]=Math.max(res[i-1]+1, res[i]);
+				if(res[i]>max) max = res[i];
+			}else if(comp[i]<comp[i-1]){
+				minus[i]=Math.max(minus[i-1]+1, minus[i]);
+				if(minus[i]>max) max = minus[i];
+			}else {
+				res[i]=res[i-1]+1;
+				minus[i]=minus[i-1]+1;
+				if(res[i]>max) max = res[i];
+				if(minus[i]>max) max = minus[i];
 			}
-			sb.setLength(sb.length()-1);
-			sb.append("\n");
-			return;
 		}
-		for(int i=val;i<=n;i++) {
-			res[chk] = i;
-			perm(i, chk+1);
-		}
+		System.out.println(max);
 	}
 	static class Reader {
 		int bfs = 1 << 16;

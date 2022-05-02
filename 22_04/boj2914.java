@@ -1,33 +1,5 @@
 import java.io.*;
-public class boj15652 {
-	static int n,m,res[];
-	static StringBuilder sb = new StringBuilder();
-	public static void main(String[] args) throws IOException {
-		Reader in = new Reader();
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		n = in.nextInt();
-		m = in.nextInt();
-		
-		res = new int[m];
-		perm(1,0);
-		sb.setLength(sb.length()-1);
-		bw.write(sb.toString());
-		bw.flush();
-	}
-	private static void perm(int val, int chk) {
-		if(chk == m) {
-			for(int i=0;i<m;i++) {
-				sb.append(res[i]).append(" ");
-			}
-			sb.setLength(sb.length()-1);
-			sb.append("\n");
-			return;
-		}
-		for(int i=val;i<=n;i++) {
-			res[chk] = i;
-			perm(i, chk+1);
-		}
-	}
+public class boj2914 {
 	static class Reader {
 		int bfs = 1 << 16;
 		byte[] buffer = new byte[bfs];
@@ -62,5 +34,9 @@ public class boj15652 {
 				return -rtn;
 			return rtn;
 		}
+	}
+	public static void main(String[] args) {
+		Reader in = new Reader();
+		System.out.println(in.nextInt()*(in.nextInt()-1)+1);
 	}
 }

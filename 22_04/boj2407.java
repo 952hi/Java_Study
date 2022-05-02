@@ -1,49 +1,54 @@
 import java.io.*;
+import java.math.BigInteger;
 public class boj2407 {
 	static class Reader {
 		int bfs = 1 << 16;
 		byte[] buffer = new byte[bfs];
-		int bufferLeft = 0, bufferState = 0;
+		int bufferPos = 0, bufferState = 0;
 		DataInputStream dis = new DataInputStream(System.in);
 
 		byte read() {
-			if (bufferLeft == bufferState) {
+			if (bufferPos == bufferState) {
 				try {
-					bufferState = dis.read(buffer, bufferLeft = 0, bfs);
+					bufferState = dis.read(buffer, bufferPos = 0, bfs);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				if (bufferState == -1)
 					buffer[0] = -1;
 			}
-			return buffer[bufferLeft++];
+			return buffer[bufferPos++];
 		}
 
 		int nextInt() {
-			int n = 0;
-			byte b = read();
-			while (b <= ' ')
-				b = read();
-			boolean neg = (b == '-');
+			int rtn = 0;
+			byte c = read();
+			while (c <= ' ')
+				c = read();
+			boolean neg = (c == '-');
 			if (neg)
-				b = read();
+				c = read();
 			do
-				n = n * 10 + b - '0';
-			while ('0' <= (b = read()) && b <= '9');
+				rtn = rtn * 10 + c - '0';
+			while ((c = read()) >= '0' && c <= '9');
 			if (neg)
-				return -n;
-			return n;
+				return -rtn;
+			return rtn;
 		}
 	}
 	public static void main(String[] args) {
 		Reader in = new Reader();
-		int n = in.nextInt();
-		int m = in.nextInt();
-		if(n==m) System.out.println(1);
-//		else {
-//			for(int i=n,k=m;i>n-m;i--,k--) {
-//				
-//			}
-//		}
+		int a = in.nextInt();
+		int b = in.nextInt();
+		BigInteger[][] dp = new BigInteger[a+1][a+1];
+		for(int i=1;i<=a;i++){
+            for(int j=0;j<=i;j++){
+                if(j == 0 || j==i)
+                    dp[i][j] = new BigInteger("1");
+                else
+                    dp[i][j] = dp[i-1][j-1].add(dp[i-1][j]);
+            }
+        }
+		System.out.println(dp[a][b]);
 	}
 }
