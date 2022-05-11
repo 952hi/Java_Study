@@ -2,19 +2,53 @@ import java.io.*;
 import java.util.*;
 
 public class boj2098 {
+	static class Reader {
+		int bfs = 1 << 16;
+		byte[] buffer = new byte[bfs];
+		int bufferPos = 0, bufferState = 0;
+		DataInputStream dis = new DataInputStream(System.in);
+
+		byte read() {
+			if (bufferPos == bufferState) {
+				try {
+					bufferState = dis.read(buffer, bufferPos = 0, bfs);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				if (bufferState == -1)
+					buffer[0] = -1;
+			}
+			return buffer[bufferPos++];
+		}
+
+		int nextInt() {
+			int rtn = 0;
+			byte c = read();
+			while (c <= ' ')
+				c = read();
+			boolean neg = (c == '-');
+			if (neg)
+				c = read();
+			do
+				rtn = rtn * 10 + c - '0';
+			while ((c = read()) >= '0' && c <= '9');
+			if (neg)
+				return -rtn;
+			return rtn;
+		}
+	}
     public static int N;
     public static int answer = Integer.MAX_VALUE;
     public static int[][] map, dp;
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
+    	Reader in = new Reader();
+        N = in.nextInt();
         map = new int[N][N];
         dp = new int[N][1<<N];
         for(int i=0; i<N; i++){
-            String[] input = br.readLine().split(" ");
             Arrays.fill(dp[i], Integer.MAX_VALUE);
             for(int j=0; j<N; j++){
-                map[i][j] = Integer.parseInt(input[j]);
+                map[i][j] = in.nextInt();
             }
         }
         dp[0][1] = 0; // 출발지는 상관이 없다 어짜피 순회하면 가장작은값은 하나다.
