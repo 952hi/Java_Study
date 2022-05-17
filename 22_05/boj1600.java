@@ -63,7 +63,7 @@ public class boj1600 {
 	static int[][] dxdy = { { 0, 0, 1, -1, -2, -1, 1, 2, 2, 1, -1, -2 }, { 1, -1, 0, 0, 1, 2, 2, 1, -1, -2, -2, -1 } };
 
 	private static void bfs() {
-		Queue<int[]> q = new PriorityQueue<>((o1,o2)->o1[0]-o2[0]);
+		Queue<int[]> q = new LinkedList<int[]>();
 		q.offer(new int[] {0,0,0,0});//move,x,y,k;\
 		boolean visited[][][] = new boolean[row][col][k+1];
 		int nx,ny,comp[],val;

@@ -38,13 +38,14 @@ public class boj1194ver2 {
 		int nx,ny,check;
 		while(!q.isEmpty()) {
 			comp = q.poll();
+			// 갱신
 			if(map[comp[0]][comp[1]]=='1') {
 				movecnt = Math.min(movecnt, comp[3]);
 			}
 			for(int i=0;i<4;i++) {
 				nx = comp[0] + dxdy[0][i];
 				ny = comp[1] + dxdy[1][i];
-				// 범위 안이고 벽이 아니지?
+				// 범위 안이고 방문안했고 벽이 아니지?
 				if(0<=nx && nx<row  && 0<=ny && ny<col && map[nx][ny]!='#' && !visited[nx][ny][comp[2]]) {
 					// 대문자 체크
 					if(map[nx][ny]-0>=65 && map[nx][ny]-0<=70 && (comp[2]&1<<map[nx][ny]-'A')==0) continue;
